@@ -44,7 +44,9 @@
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
 
-                 
+                 <argLine>
+    -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.22/aspectjweaver-1.9.22.jar"
+</argLine>
                
                     <!-- Prevent TestNG from creating “Default suite / Default test” -->
                     <properties>
@@ -127,9 +129,16 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>2.21.0</version>
-            <scope>test</scope>
+            <version>2.29.0</version>
+           
         </dependency>
+        
+        <dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>1.9.22</version>
+    <scope>test</scope>
+</dependency>
 
     </dependencies>
 

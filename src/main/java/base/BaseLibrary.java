@@ -143,7 +143,9 @@ static public WebDriver driver;
 	public class CustomReporter implements IReporter 
 	{
 
-	    public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
+	    public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) 
+	        
+	{
 	        System.out.println("Generating custom report...");
 	        // Example: Extract details from test results and format a custom report.
 	        for (ISuite suite : suites) {

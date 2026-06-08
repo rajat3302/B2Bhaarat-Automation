@@ -90,7 +90,7 @@ public class LoginTest extends BaseLibrary
 	     login.clickLogin();
 
 	     // 🔥 CASE HANDLING
-	     login.clickLogin();
+	     //login.clickLogin();
 
 	     switch(expected.toUpperCase()) {
 
@@ -123,7 +123,7 @@ public class LoginTest extends BaseLibrary
 	             break;
 
 	         case "SUCCESS":
-	             Assert.assertTrue(login.isLoginSuccessful());
+	             Assert.assertTrue(false);
 	             break;
 	     }
 	 }
