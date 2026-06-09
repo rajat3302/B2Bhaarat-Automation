@@ -55,7 +55,10 @@ static public WebDriver driver;
         prefs.put("autofill.profile_enabled", false); // Disable autofill completely
 
         options.setExperimentalOption("prefs", prefs);
-        
+//        options.addArguments(
+//        		"--user-data-dir=C:\\Users\\rajat.shrotriya\\AppData\\Local\\Google\\Chrome\\User Data");
+//
+//        		options.addArguments("--profile-directory=Default");
         
         
 		driver= new ChromeDriver(options);

@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.WindowType;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -14,6 +15,8 @@ import org.testng.annotations.Test;
 import base.BaseLibrary;
 import locators.LoginPageLocators;
 import pages.LoginPage;
+import pages.OTPPage;
+import pages.OutlookPage;
 import utilities.ExcelUtility;
 
 public class LoginTest extends BaseLibrary
@@ -66,15 +69,17 @@ public class LoginTest extends BaseLibrary
 			login.clickSignIn();
 			login.waitForLoginPage();
 		}
-	 @BeforeMethod
-	 
-	 public void resetToLoginPage() 
-	 {
-	     driver.get("https://staging.b2bhaarat.com/login");
-	 }
-	 @Test(dataProvider = "loginData")
+//	@BeforeMethod
+//	 
+//	 public void resetToLoginPage() 
+//	 {
+//		 System.out.println("===== BEFORE METHOD EXECUTED =====");
+//	     driver.get("https://staging.b2bhaarat.com/login");
+//	 }
+	 @Test(priority = 1, dataProvider = "loginData")
 	 public void TC_Login(String email, String password, String expected)
 	 {
+		 driver.get("https://staging.b2bhaarat.com/login");
 	     System.out.println("Email: " + email);
 	     System.out.println("Password: " + password);
 	     System.out.println("Expected: " + expected);
@@ -123,11 +128,47 @@ public class LoginTest extends BaseLibrary
 	             break;
 
 	         case "SUCCESS":
-	             Assert.assertTrue(false);
+	             Assert.assertTrue(login.isLoginSuccessful());
 	             break;
 	     }
 	 }
 	 
+	
+	@Test(priority  = 2)
+	 public void ReadOTPTest() throws Exception
+	 {
+		String mainTab = driver.getWindowHandle();
+
+		// New tab open
+		driver.switchTo().newWindow(WindowType.TAB);
+
+		driver.get("https://outlook.office.com");
+
+		// Manual login wait
+		System.out.println("Login Outlook and press ENTER");
+		Thread.sleep(20000);
+
+		// Read OTP
+		OutlookPage outlook = new OutlookPage(driver);
+
+		outlook.openB2BFolder();
+		Thread.sleep(3000);
+		outlook.openLatestOtpMail();
+		Thread.sleep(5000);
+
+		String otp = outlook.getOTP();
+
+		System.out.println("OTP = " + otp);
+
+		// Back to B2Bhaarat
+		driver.switchTo().window(mainTab);
+
+		Thread.sleep(3000);
+		OTPPage otpPage = new OTPPage(driver);
+
+		otpPage.enterOTP(otp);
+		otpPage.clickVerify();
+	 }
 	 @AfterClass
 	 public void tearDown()
 	 {
